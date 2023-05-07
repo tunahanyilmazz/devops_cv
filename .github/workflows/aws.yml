@@ -1,0 +1,38 @@
+name: Convert LaTeX CV to Image and Publish on EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Convert LaTeX to Image
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive imagemagick
+          pdflatex path/to/your/cv.tex
+          convert -density 300 cv.pdf -quality 90 cv.png
+
+      - name: Copy Image to EC2 Instance
+        uses: appleboy/scp-action@master
+        with:
+          host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: cv.png
+          target: /var/www/html/
+
+      - name: Restart Apache2 on EC2 Instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: sudo systemctl restart apache2
