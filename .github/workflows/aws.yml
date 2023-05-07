@@ -18,6 +18,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y texlive imagemagick
           sudo apt-get install texlive-publishers
+          sudo apt-get install texlive-fonts-extra
           wget https://raw.githubusercontent.com/tunahanyilmazz/devops_cv/main/main.tex
           pdflatex main.tex
           convert -density 300 main.pdf -quality 90 main.png
