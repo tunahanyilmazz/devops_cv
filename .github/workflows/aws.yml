@@ -17,9 +17,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y texlive imagemagick
-          pdflatex path/to/your/cv.tex
-          convert -density 300 cv.pdf -quality 90 cv.png
-
+          pdflatex tunahanyilmazz/main.tex
+          convert -density 300 main.pdf -quality 90 cv.png
+          
       - name: Copy Image to EC2 Instance
         uses: appleboy/scp-action@master
         with:
@@ -36,3 +36,4 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: sudo systemctl restart apache2
+
