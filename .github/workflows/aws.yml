@@ -31,7 +31,7 @@ jobs:
         with:
           host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
           username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the name of the secret that contains the SSH private key
           source: cv.png
           target: /var/www/html/
 
@@ -40,5 +40,5 @@ jobs:
         with:
           host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
           username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the name of the secret that contains the SSH private key
           script: sudo systemctl restart apache2
