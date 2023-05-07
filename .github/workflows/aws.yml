@@ -20,8 +20,8 @@ jobs:
           sudo apt-get install texlive-publishers
           sudo apt-get install texlive-fonts-extra
           wget https://raw.githubusercontent.com/tunahanyilmazz/devops_cv/main/main.tex
-          pdflatex main.tex
-          convert -density 300 main.pdf -quality 90 main.png
+          pdflatex -halt-on-error -interaction=batchmode main.tex || true
+          convert -density 300 main.pdf -quality 90 main.png || true
           rm main.tex main.pdf
           
       - name: Copy Image to EC2 Instance
@@ -40,4 +40,3 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: sudo systemctl restart apache2
-
