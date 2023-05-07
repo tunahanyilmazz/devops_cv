@@ -17,7 +17,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y texlive imagemagick
-          pdflatex tunahanyilmazz/main.tex
+          pdflatex tunahanyilmazz/devops_cv/main.tex
           convert -density 300 main.pdf -quality 90 cv.png
           
       - name: Copy Image to EC2 Instance
