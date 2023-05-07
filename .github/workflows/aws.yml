@@ -19,9 +19,11 @@ jobs:
           sudo apt-get install -y texlive imagemagick
           sudo apt-get install texlive-publishers
           sudo apt-get install texlive-fonts-extra
+          sudo apt-get install poppler-utils
           wget https://raw.githubusercontent.com/tunahanyilmazz/devops_cv/main/main.tex
           pdflatex -halt-on-error -interaction=batchmode main.tex || true
-          convert -density 300 main.pdf -quality 90 main.png || true
+          pdftoppm -png -r 300 main.pdf main
+          mv main-1.png main.png
           rm main.tex main.pdf
           
       - name: Copy Image to EC2 Instance
