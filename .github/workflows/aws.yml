@@ -33,6 +33,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the name of the secret that contains the SSH private key
           script: |
+            sudo chown -R www-data:www-data /var/www/html/
             sudo chmod -R 755 /var/www/html/
 
       - name: Copy Image to EC2 Instance
