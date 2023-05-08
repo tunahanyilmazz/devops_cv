@@ -1,0 +1,39 @@
+name: Connect to AWS Ubuntu Instance
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+jobs:
+  connect:
+    name: Connect to AWS Instance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Connect to AWS Ubuntu Instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Run commands on the AWS Ubuntu instance
+            echo "Connected to AWS Ubuntu instance."
+            # Add your custom commands here
+            
+
+
+
+ 
