@@ -15,6 +15,7 @@ jobs:
 
       - name: Convert LaTeX to Image
         run: |
+          sudo su -
           sudo apt-get update
           sudo apt-get install -y texlive imagemagick
           sudo apt-get install texlive-publishers
@@ -26,16 +27,6 @@ jobs:
           mv main-1.png main.png
           rm main.tex main.pdf
           
-      - name: Set Permissions on Remote Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the name of the secret that contains the SSH private key
-          script: |
-            sudo chown -R www-data:www-data /var/www/html/
-            sudo chmod -R 755 /var/www/html/
-
       - name: Copy Image to EC2 Instance
         uses: appleboy/scp-action@master
         with:
@@ -44,6 +35,15 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the name of the secret that contains the SSH private key
           source: main.png
           target: /var/www/html/
+
+      - name: Set Permissions on Image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the name of the secret that contains the SSH private key
+          script: |
+            sudo chmod 644 /var/www/html/main.png
 
       - name: Restart Apache2 on EC2 Instance
         uses: appleboy/ssh-action@master
