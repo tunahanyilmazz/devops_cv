@@ -32,7 +32,7 @@ jobs:
           host: ec2-16-16-120-213.eu-north-1.compute.amazonaws.com
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the name of the secret that contains the SSH private key
-          source: cv.png
+          source: main.png
           target: /var/www/html/
 
       - name: Restart Apache2 on EC2 Instance
